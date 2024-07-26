@@ -22,15 +22,19 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private float jumpCounter;
     Vector2 vecGravity;
+    private bool isDead = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
+    
     }
     private void Update()
     {
+        if (isDead) return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
 
@@ -44,10 +48,10 @@ public class PlayerMovement : MonoBehaviour
             isJumping = true;
             jumpCounter = 0;
         }
-        if(rb.velocity.y > 0 && isJumping)
+        if (rb.velocity.y > 0 && isJumping)
         {
             jumpCounter += Time.deltaTime;
-            if(jumpCounter > jumpTime) 
+            if (jumpCounter > jumpTime)
                 isJumping = false;
             float t = jumpCounter / jumpTime;
             float currentJumpM = jumpMultiplier;
@@ -60,12 +64,20 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = false;
         }
-        if(rb.velocity.y < 0)
+        if (rb.velocity.y < 0)
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
         }
-
         Flip();
+    }
+    
+    public void Die()
+    {
+        animator.SetTrigger("Die");
+        isDead = true;
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+        gameObject.GetComponent<Collider2D>().enabled = false;
     }
     private void Flip()
     {

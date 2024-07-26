@@ -12,33 +12,43 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private LayerMask enemyLayers;
     [Range(1, 1000)]
     [SerializeField] private int attackDamage; // Sát thương của mỗi đòn đánh
-    [Range(1.6f,2.4f)]
+    [Range(1.6f, 2.4f)]
     [SerializeField] private float attackRate; // Tốc độ tấn công
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] Transform firingPoint;
+    public bool isShooting = false;
+    private MP mp;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        mp = FindObjectOfType<MP>();
     }
 
     void Update()
     {
-        HandleAttack();
+       
+            HandleAttack();
+            Shoot();
+        
+    }
 
+    public void Shoot()
+    {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Shoot();
+            if (Time.time > nextAttackTime && mp.currentMP > 0)
+            {
+                Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
+                nextAttackTime = Time.time + 0.5f;
+                isShooting = true;
+            }
         }
-    }
-    private void Shoot()
-    {
-        if (Time.time > nextAttackTime) 
+        if (Input.GetKeyUp(KeyCode.K))
         {
-            Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
-            nextAttackTime = Time.time + 1;
-        }   
+            isShooting = false;
+        }
     }
 
     void HandleAttack()
@@ -64,13 +74,15 @@ public class PlayerAttack : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
-            //enemy.GetComponent<Enemy>().TakeDamage(attackDamage); // Gọi hàm TakeDamage của kẻ thù
+            enemy.GetComponent<Health>().TakeDamage(attackDamage); // Gọi hàm TakeDamage của kẻ thù
+
         }
     }
 
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 

@@ -42,6 +42,7 @@ public class Bullet : MonoBehaviour
             //{
             //    enemy.TakeDamage(damage);
             //}
+            collision.GetComponent<Health>().TakeDamage(damage);
         }
         hit = true;
         // Thiết lập trạng thái hit và vô hiệu hóa collider
