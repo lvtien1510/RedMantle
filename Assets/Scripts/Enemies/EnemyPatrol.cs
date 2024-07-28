@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
@@ -52,21 +52,29 @@ public class EnemyPatrol : MonoBehaviour
     private void DirectionChange()
     {
         anim.SetBool("Run", false);
-        
+
         idleTimer += Time.deltaTime;
 
         if (idleTimer > idleDuration)
             movingLeft = !movingLeft;
     }
-    
+
     private void MoveInDirection(int _direction)
     {
         idleTimer = 0;
         anim.SetBool("Run", true);
 
-        //Make enemy face direction
-        enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction,
-            initScale.y, initScale.z);
+        ////Make enemy face direction
+        //enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction,
+        //    initScale.y, initScale.z);
+        if (_direction == -1)
+        {
+            enemy.rotation = Quaternion.Euler(0, 180, 0); // Quay mặt về phía bên trái
+        }
+        else
+        {
+            enemy.rotation = Quaternion.Euler(0, 0, 0); // Quay mặt về phía bên phải
+        }
 
         //Move in that direction
         enemy.position = new Vector3(enemy.position.x + Time.deltaTime * _direction * speed,
