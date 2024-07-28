@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseFly : MonoBehaviour
+public class FlyEnemy : MonoBehaviour
 {
     [SerializeField] private float speed;
-    //public bool chase = false;
+    public bool chase = false;
     [SerializeField] private Transform startingPoint;
-    private GameObject player;
+    [SerializeField] private GameObject player;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (player == null)
         {
             return;
         }
-        //if (chase == true)
+        if (chase == true)
             Chase();
-        //else
-        //    ReturnStartPoint();
+        else
+            ReturnStartPoint();
         Flip();
     }
     private void Chase()

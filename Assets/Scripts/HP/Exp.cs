@@ -1,46 +1,65 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
 public class Exp : MonoBehaviour
 {
-    private float maxMP = 100;
-    private float currentMP = 100;
-    [SerializeField] private Image mPFill;
-    [SerializeField] private TextMeshProUGUI textMP;
-    [SerializeField] private float fillSpeed;
-    // [SerializeField] private Gradient colorGradient;
-    [SerializeField] private PlayerAttack player;
-    [SerializeField] private int reduceMP;
+    [SerializeField] private int currentExp, maxExp;
+    public int currentLevel;
 
+    public delegate void LevelUpHandler(int newLevel);
+    public event LevelUpHandler OnLevelUp;
+
+    [SerializeField] private Image expFill;
+    [SerializeField] private TextMeshProUGUI textExp;
+    [SerializeField] private TextMeshProUGUI textExpPercent;
+    [SerializeField] private float fillSpeed;
+
+    private void OnEnable()
+    {
+        ExperienceManager.Instance.OnExperienceChange += HandleExperienceChange;
+    }
+
+    private void OnDisable()
+    {
+        ExperienceManager.Instance.OnExperienceChange -= HandleExperienceChange;
+    }
+
+    private void HandleExperienceChange(int newExp)
+    {
+        currentExp += newExp;
+        UpdateExpBar();
+        Debug.Log("Current Experience: " + currentExp);
+        if (currentExp >= maxExp)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        currentExp -= maxExp; // Giữ lại exp dư thừa sau khi lên cấp
+        currentLevel++;
+        maxExp += 100;
+
+        OnLevelUp?.Invoke(currentLevel);
+        UpdateExpBar();
+    }
 
     private void Awake()
     {
-        currentMP = maxMP;
-        textMP.text = currentMP + " / " + maxMP;
+        UpdateExpBar();
     }
-    private void FixedUpdate()
-    {
-        if (player.isShooting)
-        {
-            UpdateMP(reduceMP);
-        }
-    }
-    public void UpdateMP(float amount)
-    {
-        currentMP += amount;
-        currentMP = Mathf.Clamp(currentMP, 0, maxMP);
-        textMP.text = currentMP + " / " + maxMP;
-        UpdateMPBar();
 
-
-    }
-    private void UpdateMPBar()
+    private void UpdateExpBar()
     {
-        float targetFillAmount = currentMP / maxMP;
-        // healthBarFill.fillAmount = targetFillAmount;
-        mPFill.DOFillAmount(targetFillAmount, fillSpeed);
-        // healthBarFill.color = colorGradient.Evaluate(targetFillAmount);
+        textExp.text = currentLevel.ToString();
+        float percentage = (float)currentExp / maxExp * 100;
+        string formattedPercentage = percentage.ToString("00.00") + " %";
+        textExpPercent.text = formattedPercentage;
+
+        float targetFillAmount = (float)currentExp / maxExp;
+        expFill.DOFillAmount(targetFillAmount, fillSpeed);
     }
 }

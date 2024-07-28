@@ -7,7 +7,6 @@ public class Health : MonoBehaviour
     [SerializeField] private float startingHealth;
     public float currentHealth { get; private set; }
     private Animator anim;
-    private bool dead;
 
     [Header("iFrames")]
     [SerializeField] private float iFramesDuration;
@@ -18,6 +17,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Behaviour[] components;
     private bool invulnerable;
 
+    [SerializeField] private int expAmount;
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -31,22 +31,21 @@ public class Health : MonoBehaviour
 
         if (currentHealth > 0)
         {
-            anim.SetTrigger("hurt");
+            //anim.SetTrigger("hurt");
             StartCoroutine(Invunerability());
         }
-        else
+        else if (currentHealth <= 0)
         {
-            if (!dead)
+            anim.SetTrigger("Die");
+            ExperienceManager.Instance.AddExperience(expAmount);
+            
+            //Deactivate all attached component classes
+            foreach (Behaviour component in components)
             {
-                anim.SetTrigger("Die");
-
-                //Deactivate all attached component classes
-                foreach (Behaviour component in components)
-                    component.enabled = false;
-
-                dead = true;
-                
+                //component.enabled = false;
+                Destroy(component, 0.6f);
             }
+            Destroy(gameObject, 0.6f);
         }
     }
     public void AddHealth(float _value)
