@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
-    
     }
     private void Update()
     {
@@ -70,12 +69,13 @@ public class PlayerMovement : MonoBehaviour
         }
         Flip();
     }
-    
+
     public void Die()
     {
         animator.SetTrigger("Die");
         isDead = true;
-        rb.velocity = Vector2.zero;
+        gameObject.GetComponent<HealthBar>().enabled = false;
+        gameObject.GetComponent<MP>().enabled = false;
         rb.isKinematic = true;
         gameObject.GetComponent<Collider2D>().enabled = false;
     }

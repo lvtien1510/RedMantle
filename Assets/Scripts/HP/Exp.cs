@@ -5,7 +5,8 @@ using DG.Tweening;
 
 public class Exp : MonoBehaviour
 {
-    [SerializeField] private int currentExp, maxExp;
+    public int currentExp = 0;
+    public int maxExp;
     public int currentLevel;
 
     public delegate void LevelUpHandler(int newLevel);
@@ -14,8 +15,8 @@ public class Exp : MonoBehaviour
     [SerializeField] private Image expFill;
     [SerializeField] private TextMeshProUGUI textExp;
     [SerializeField] private TextMeshProUGUI textExpPercent;
-    [SerializeField] private float fillSpeed;
-
+    
+    
     private void OnEnable()
     {
         ExperienceManager.Instance.OnExperienceChange += HandleExperienceChange;
@@ -35,20 +36,27 @@ public class Exp : MonoBehaviour
         {
             LevelUp();
         }
+        PlayerPrefs.SetInt("CurrentExp", currentExp);
+        PlayerPrefs.SetInt("MaxExp", maxExp);
+        PlayerPrefs.SetInt("CurrentLevel", currentLevel);
     }
 
     private void LevelUp()
     {
         currentExp -= maxExp; // Giữ lại exp dư thừa sau khi lên cấp
         currentLevel++;
-        maxExp += 100;
-
+        maxExp = (int)(200 * Mathf.Pow(1.5f, currentLevel - 0.5f));
         OnLevelUp?.Invoke(currentLevel);
         UpdateExpBar();
     }
 
-    private void Awake()
+    private void Start()
     {
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.Save();
+        currentExp = PlayerPrefs.GetInt("CurrentExp", 0);
+        maxExp = PlayerPrefs.GetInt("MaxExp", 200);
+        currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
         UpdateExpBar();
     }
 
@@ -60,6 +68,6 @@ public class Exp : MonoBehaviour
         textExpPercent.text = formattedPercentage;
 
         float targetFillAmount = (float)currentExp / maxExp;
-        expFill.DOFillAmount(targetFillAmount, fillSpeed);
+        expFill.fillAmount = targetFillAmount;
     }
 }

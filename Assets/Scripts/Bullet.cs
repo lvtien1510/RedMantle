@@ -45,16 +45,7 @@ public class Bullet : MonoBehaviour
             collision.GetComponent<Health>().TakeDamage(damage);
         }
         hit = true;
-        // Thiết lập trạng thái hit và vô hiệu hóa collider
-        capsuleCollider.enabled = false;
-        //if (rb.velocity.x > 0.01f)
-        //{
-        //    transform.position += new Vector3(1.3f, 0, 0);
-        //}
-        //else if (rb.velocity.x < -0.01f)
-        //{
-        //    transform.position -= new Vector3(1.3f, 0, 0);
-        //}
+        
         // Ngừng di chuyển viên đạn
         rb.velocity = Vector2.zero;
         

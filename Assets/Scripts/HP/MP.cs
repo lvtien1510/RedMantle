@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class MP : MonoBehaviour
 {
+
     public float maxMP;
     public float currentMP;
     [SerializeField] private Image mPFill;
@@ -12,21 +13,26 @@ public class MP : MonoBehaviour
     [SerializeField] private float fillSpeed;
     // [SerializeField] private Gradient colorGradient;
     [SerializeField] private PlayerAttack player;
-    [SerializeField] private int reduceMP;
 
     [SerializeField] private float regenInterval; // Thời gian chờ để tăng MP
-    [SerializeField] private int mpIncreaseAmount; // Lượng MP sẽ tăng mỗi lần
+    private int mpIncreaseAmount; // Lượng MP sẽ tăng mỗi lần
     private float timer; // Bộ đếm thời gian
     private int countShoot;
     [SerializeField] private Exp checkLevel; // Gán Exp script thông qua Inspector
 
 
-    private void Awake()
+    private void Start()
     {
-        currentMP = maxMP;
-        textMP.text = currentMP + " / " + maxMP;
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.Save();
+        currentMP = PlayerPrefs.GetFloat("CurrentMP", 100);
+        maxMP = PlayerPrefs.GetFloat("MaxMP", 100);
+        player.attackDamage = PlayerPrefs.GetInt("Attack", 40);
+        UpdateMP(0);
         countShoot = 0;
         timer = regenInterval;
+        mpIncreaseAmount = (int)(maxMP * 0.05);
+        
     }
     private void OnEnable()
     {
@@ -42,16 +48,19 @@ public class MP : MonoBehaviour
     {
         if (newLevel == checkLevel.currentLevel)
         {
-            maxMP += 100;
+            maxMP = (int)(100 * Mathf.Pow(1.1f, checkLevel.currentLevel - 1));
             currentMP = maxMP;
+            player.attackDamage += 25;
             UpdateMP(0);
+            PlayerPrefs.SetFloat("MaxMP", maxMP);
+            PlayerPrefs.SetInt("Attack", player.attackDamage);
         }
     }
     private void Update()
     {
         if (player.isShooting && countShoot == 0)
         {
-            UpdateMP(reduceMP);
+            UpdateMP(player.reduceMP);
             countShoot = 1;
         } else if (!player.isShooting)
         {
@@ -72,7 +81,7 @@ public class MP : MonoBehaviour
         currentMP = Mathf.Clamp(currentMP, 0, maxMP);
         textMP.text = currentMP + " / " + maxMP;
         UpdateMPBar();
-
+        PlayerPrefs.SetFloat("CurrentMP", currentMP);
 
     }
     private void UpdateMPBar()

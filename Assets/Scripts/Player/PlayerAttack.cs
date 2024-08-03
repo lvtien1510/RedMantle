@@ -11,16 +11,20 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayers;
     [Range(1, 1000)]
-    [SerializeField] private int attackDamage; // Sát thương của mỗi đòn đánh
+    public int attackDamage; // Sát thương của mỗi đòn đánh
     [Range(1.6f, 2.4f)]
     [SerializeField] private float attackRate; // Tốc độ tấn công
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] Transform firingPoint;
     public bool isShooting = false;
+    [SerializeField] private GameObject bulletPrefabB;
+    [SerializeField] Transform firingPointB;
+    public int reduceMP;
+
     private MP mp;
 
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         mp = FindObjectOfType<MP>();
@@ -28,24 +32,58 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-       
-            HandleAttack();
-            Shoot();
-        
+        HandleAttack();
+        Shoot();
+        ShootB();
     }
 
     public void Shoot()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            if (Time.time > nextAttackTime && mp.currentMP > 0)
+            if (Time.time > nextAttackTime && mp.currentMP >= 7)
             {
                 Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
                 nextAttackTime = Time.time + 0.5f;
+                reduceMP = 7;
                 isShooting = true;
             }
         }
         if (Input.GetKeyUp(KeyCode.K))
+        {
+            isShooting = false;
+        }
+    }
+
+    public void ShootB()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (Time.time > nextAttackTime && mp.currentMP >= 25)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    GameObject bullet = Instantiate(bulletPrefabB, firingPointB.position, firingPointB.rotation);
+                    Bullet2 bulletScript = bullet.GetComponent<Bullet2>();
+
+                    // Determine the direction based on the player's facing direction
+                    Vector2 direction = transform.localRotation.eulerAngles.y == 180 ? Vector2.left : Vector2.right;
+                    bulletScript.SetDirection(direction);
+
+                    // Randomize the throw angle between 20 and 50 degrees
+                    float randomThrowAngle = Random.Range(20f, 50f);
+                    bulletScript.SetThrowAngle(randomThrowAngle);
+
+                    // Randomize the speed between 10 and 15
+                    float randomSpeed = Random.Range(10f, 15f);
+                    bulletScript.SetSpeed(randomSpeed);
+                }
+                reduceMP = 25;
+                nextAttackTime = Time.time + 0.5f;
+                isShooting = true;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.L))
         {
             isShooting = false;
         }
@@ -75,7 +113,6 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<Health>().TakeDamage(attackDamage); // Gọi hàm TakeDamage của kẻ thù
-
         }
     }
 
@@ -85,5 +122,4 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-
 }
