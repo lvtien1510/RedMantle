@@ -242,7 +242,7 @@ Transform:
   m_GameObject: {fileID: 4117435895737696488}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.960996, y: -0.5865223, z: -9.984357}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -341,8 +341,8 @@ Transform:
   m_GameObject: {fileID: 4733080909258044063}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.8, y: 2.97, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 9.0898, y: 3.3732, z: 0}
+  m_LocalScale: {x: 0.6922, y: 0.6922, z: 0.6922}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2131785620643740137}
@@ -425,8 +425,8 @@ Transform:
   m_GameObject: {fileID: 6831273156376026944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.24, y: 1.62, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 14.24, y: 2.4387, z: 0}
+  m_LocalScale: {x: 0.6922, y: 0.6922, z: 0.6922}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5423396755495034207}
@@ -509,8 +509,8 @@ Transform:
   m_GameObject: {fileID: 6883162217398031535}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.83, y: 4.28, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 13.9562, y: 4.28, z: 0}
+  m_LocalScale: {x: 0.6922, y: 0.6922, z: 0.6922}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4553913533835613110}
@@ -593,8 +593,8 @@ Transform:
   m_GameObject: {fileID: 7977923138763163063}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 3.91, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.3549, y: 4.0239, z: 0}
+  m_LocalScale: {x: 0.6922, y: 0.6922, z: 0.6922}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 102320634203839414}
@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 4544481910798696279}
   - component: {fileID: 3904045832835636503}
   - component: {fileID: 3122402402912383179}
+  - component: {fileID: 4002923419552996470}
   m_Layer: 9
   m_Name: Bee_0
   m_TagString: Enemy
@@ -650,8 +651,8 @@ Transform:
   m_GameObject: {fileID: 8186873150515799834}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.62, y: 2.09, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0.83, y: 2.77, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3836540707832676332}
@@ -771,14 +772,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.8125, y: 6.15625}
+    oldSize: {x: 1.54, y: 1.97}
     newSize: {x: 4.8125, y: 6.15625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.8125, y: 6.15625}
+  m_Size: {x: 1.203125, y: 1.5390625}
   m_EdgeRadius: 0
 --- !u!95 &3904045832835636503
 Animator:
@@ -818,7 +819,32 @@ MonoBehaviour:
   - {fileID: 1258794671470179827}
   - {fileID: 8971693457010979297}
   - {fileID: 8097939071428198295}
-  speed: 0.5
+  speed: 0.4
+--- !u!114 &4002923419552996470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186873150515799834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1484982dabbb0f24f8259bb6985f19e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 95
+  iFramesDuration: 0
+  numberOfFlashes: 0
+  components:
+  - {fileID: 4117435895737696488}
+  itemDrops:
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  dropRate: 0.2
+  expAmount: 40
+  enemyID: 2
+  damageAmount: 20
 --- !u!1 &8718023748986148567
 GameObject:
   m_ObjectHideFlags: 0

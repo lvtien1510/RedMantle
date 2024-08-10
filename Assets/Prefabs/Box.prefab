@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5893225122694507964}
   - component: {fileID: 498590012185442973}
   - component: {fileID: 7064025489611052273}
+  - component: {fileID: 6543321809321196272}
   m_Layer: 8
   m_Name: Box
   m_TagString: Untagged
@@ -158,3 +159,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.09375, y: 1.09375}
   m_EdgeRadius: 0
+--- !u!114 &6543321809321196272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6639125597808087362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb02adc9bfc09d47952a2b59174e41a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 1
+  components:
+  - {fileID: 6639125597808087362}
+  itemDrops:
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  dropRate: 0.1

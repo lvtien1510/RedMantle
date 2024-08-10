@@ -48,25 +48,7 @@ public class RangedEnemy : MonoBehaviour
         if (enemyPatrol != null)
             enemyPatrol.enabled = !PlayerInSight();
     }
-    // This method will be called by EnemyPatrol to update the bullet direction
-    
-    //private void RangedAttack()
-    //{
-    //    cooldownTimer = 0;
-    //    Debug.Log("aa");
-    //    //fireballs[FindFireball()].transform.position = firepoint.position;
-    //    //fireballs[FindFireball()].GetComponent<EnemyProjectile>().ActivateProjectile();
-    //}
-    //private void FindFireball()
-    //{
-    //    //for (int i = 0; i < fireballs.Length; i++)
-    //    //{
-    //    //    if (!fireballs[i].activeInHierarchy)
-    //    //        return i;
-    //    //}
-    //    //return 0;
-    //    Debug.Log("1a");
-    //}
+
 
     private bool PlayerInSight()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -22,13 +23,18 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private float jumpCounter;
     Vector2 vecGravity;
-    private bool isDead = false;
+    public bool isDead = false;
+
+    private HealthBar hp;
+    private MP mp;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
+        hp = FindObjectOfType<HealthBar>();
+        mp = FindObjectOfType<MP>();
     }
     private void Update()
     {
@@ -74,10 +80,36 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetTrigger("Die");
         isDead = true;
-        gameObject.GetComponent<HealthBar>().enabled = false;
-        gameObject.GetComponent<MP>().enabled = false;
-        rb.isKinematic = true;
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        if (isDead)
+        {
+            gameObject.GetComponent<HealthBar>().enabled = false;
+            gameObject.GetComponent<MP>().enabled = false;
+            gameObject.GetComponent<PlayerAttack>().enabled = false;
+            rb.isKinematic = true;
+            rb.velocity = Vector3.zero;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+        }
+        else
+        {
+            gameObject.GetComponent<HealthBar>().enabled = true;
+            gameObject.GetComponent<MP>().enabled = true;
+            gameObject.GetComponent<PlayerAttack>().enabled = true;
+            rb.isKinematic = false;
+            gameObject.GetComponent<Collider2D>().enabled = true;
+           
+        }
+        hp.currentHealth = hp.maxHealth;
+        mp.currentMP = mp.maxMP;
+        GameManager.Instance.startPosition = Vector3.zero;
+        StartCoroutine(LoadAfterDelay());
+
+    }
+    IEnumerator LoadAfterDelay()
+    {
+        yield return new WaitForSeconds(3);
+        isDead = false;
+        SceneManager.LoadScene("Lv2");
+        
     }
     private void Flip()
     {

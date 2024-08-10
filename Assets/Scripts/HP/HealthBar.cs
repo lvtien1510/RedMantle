@@ -108,11 +108,13 @@ public class HealthBar : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         healthText.text = currentHealth + " / " + maxHealth;
-        if (currentHealth <= 0.01)
+        
+        UpdateHealthBar();
+        if (currentHealth <= 0.01 && !player.isDead)
         {
             player.Die();
+            healthBarFill.DOFillAmount(0, fillSpeed);
         }
-        UpdateHealthBar();
         PlayerPrefs.SetFloat("CurrentHP", currentHealth);
 
     }

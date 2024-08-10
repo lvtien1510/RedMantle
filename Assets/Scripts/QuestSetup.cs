@@ -62,8 +62,8 @@ public class QuestSetup : MonoBehaviour
 
         questGiver.quests = quests;
 
-        // Đảm bảo nhiệm vụ đầu tiên được nhận ngay lập tức
-        if (quests.Count > 0)
+        // Nếu không có nhiệm vụ hiện tại (không có dữ liệu được load), đặt quest đầu tiên
+        if (questGiver.currentQuest == null && quests.Count > 0)
         {
             questGiver.currentQuest = quests[0];
             questGiver.currentQuest.StartQuest();

@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 1885302421987596134}
   - component: {fileID: 5827354694996283975}
   - component: {fileID: 4183142882533427273}
-  m_Layer: 0
+  - component: {fileID: 4510231070506725711}
+  m_Layer: 9
   m_Name: Bee
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.889576, y: 2.5184133, z: 10}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3875815898390801552}
@@ -151,14 +152,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.8125, y: 6.15625}
+    oldSize: {x: 1.54, y: 1.97}
     newSize: {x: 4.8125, y: 6.15625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.8125, y: 6.15625}
+  m_Size: {x: 1.54, y: 1.97}
   m_EdgeRadius: 0
 --- !u!114 &5827354694996283975
 MonoBehaviour:
@@ -197,6 +198,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4510231070506725711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317812123004489284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1484982dabbb0f24f8259bb6985f19e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 180
+  iFramesDuration: 0
+  numberOfFlashes: 0
+  components:
+  - {fileID: 2551756505294085229}
+  itemDrops:
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  - {fileID: 3745586075224722107, guid: 047844f8d981f7940b2541f90d272195, type: 3}
+  dropRate: 0.2
+  expAmount: 100
+  enemyID: 6
+  damageAmount: 80
 --- !u!1 &2551756505294085229
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5143455865249477912}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StartingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 6279638878455895679}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.78, y: 1.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -272,7 +300,7 @@ GameObject:
   - component: {fileID: 7126948147271160832}
   - component: {fileID: 134377332127434890}
   - component: {fileID: 1843198019402040371}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ChaseArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +355,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -3.4861498, y: -2.3516798}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -338,7 +366,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 20}
+  m_Size: {x: 26.9723, y: 15.29664}
   m_EdgeRadius: 0
 --- !u!114 &1843198019402040371
 MonoBehaviour:
