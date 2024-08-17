@@ -7,6 +7,7 @@ public class QuestSetup : MonoBehaviour
 
     private void Start()
     {
+
         List<Quest> quests = new List<Quest>();
 
         Quest quest1 = new Quest
@@ -19,9 +20,9 @@ public class QuestSetup : MonoBehaviour
             goal = new QuestGoal
             {
                 goalType = GoalType.Kill,
-                requiredAmounts = new List<int> { 10},
-                targetIds = new List<int> { 1}, // 1: Slime, 2: Chuột
-                currentAmounts = new List<int> { 0} // Đảm bảo khởi tạo currentAmounts
+                requiredAmounts = new List<int> { 10 },
+                targetIds = new List<int> { 1 }, // 1: Slime, 2: Chuột
+                currentAmounts = new List<int> { 0 } // Đảm bảo khởi tạo currentAmounts
             }
         };
         quests.Add(quest1);
@@ -62,12 +63,30 @@ public class QuestSetup : MonoBehaviour
 
         questGiver.quests = quests;
 
-        // Nếu không có nhiệm vụ hiện tại (không có dữ liệu được load), đặt quest đầu tiên
-        if (questGiver.currentQuest == null && quests.Count > 0)
+        // Retrieve stored quest ID
+        int storedQuestID = PlayerPrefs.GetInt("CurrentQuestID", -1);
+
+        if (storedQuestID < 1)
         {
-            questGiver.currentQuest = quests[0];
-            questGiver.currentQuest.StartQuest();
-            questGiver.UpdateQuestUI();
+            // No quest assigned or quest ID is invalid, assign the first quest
+            if (quests.Count > 0)
+            {
+                questGiver.currentQuest = quests[0];
+                questGiver.currentQuest.StartQuest();
+                questGiver.UpdateQuestUI();
+            }
+        }
+        else
+        {
+            // Find and assign the quest with the stored quest ID
+            Quest questToAssign = quests.Find(q => q.questID == storedQuestID);
+            if (questToAssign != null)
+            {
+                questGiver.currentQuest = questToAssign;
+                questGiver.currentQuest.LoadQuestData(); // Load quest data from PlayerPrefs
+                questGiver.UpdateQuestUI();
+            }
         }
     }
+
 }

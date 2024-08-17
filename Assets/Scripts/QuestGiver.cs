@@ -95,7 +95,7 @@ public class QuestGiver : MonoBehaviour
     {
         if (currentQuest != null && currentQuest.isActive && currentQuest.goal.goalType == GoalType.Kill)
         {
-            currentQuest.goal.EnemyKilled(enemyID);
+            currentQuest.goal.EnemyKilled(enemyID, currentQuest.questID); // Truyền questID vào đây
             UpdateQuestUI();
             SaveQuestData();
 
@@ -110,7 +110,7 @@ public class QuestGiver : MonoBehaviour
     {
         if (currentQuest != null && currentQuest.isActive && currentQuest.goal.goalType == GoalType.Gathering)
         {
-            currentQuest.goal.ItemCollected(itemID);
+            currentQuest.goal.ItemCollected(itemID, currentQuest.questID); // Truyền questID vào đây
             UpdateQuestUI();
             SaveQuestData();
 
@@ -157,7 +157,7 @@ public class QuestGiver : MonoBehaviour
         canReceiveNewQuest = PlayerPrefs.GetInt("CanReceiveNewQuest", 0);
         if (currentQuestID != -1)
         {
-            currentQuest = quests.Find(q => q.questID == currentQuestID);
+            currentQuest = quests.Find(quest => quest.questID == currentQuestID);
             if (currentQuest != null)
             {
                 currentQuest.LoadQuestData();

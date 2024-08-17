@@ -9,6 +9,7 @@ public class HealthBar : MonoBehaviour
 
     public float maxHealth;
     public float currentHealth;
+    public float bonus;
     [SerializeField] private Image healthBarFill;
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private float fillSpeed;
@@ -19,7 +20,8 @@ public class HealthBar : MonoBehaviour
     private float lastDamageTime;
 
     [SerializeField] private float regenInterval; // Thời gian chờ để tăng HP
-    private int hpIncreaseAmount; // Lượng HP sẽ tăng mỗi lần
+    public int hpIncreaseAmount; // Lượng HP sẽ tăng mỗi lần
+    public float count;
     private float timer; // Bộ đếm thời gian
     [SerializeField] private Exp checkLevel; // Gán Exp script thông qua Inspector
 
@@ -27,6 +29,7 @@ public class HealthBar : MonoBehaviour
     private float iFramesDuration;
     private int numberOfFlashes;
     private Rigidbody2D rb;
+    
 
     private void Start()
     {
@@ -34,13 +37,15 @@ public class HealthBar : MonoBehaviour
         //PlayerPrefs.Save();
         currentHealth = PlayerPrefs.GetFloat("CurrentHP", 100);
         maxHealth = PlayerPrefs.GetFloat("MaxHP", 100);
+        count = PlayerPrefs.GetFloat("Count", 0.05f);
+        bonus = PlayerPrefs.GetFloat("Bonus", 0);
+        hpIncreaseAmount = PlayerPrefs.GetInt("HpIncrease", (int)(maxHealth * count));
         UpdateHealth(0);
         spriteRend = GetComponent<SpriteRenderer>();
         iFramesDuration = 1;
         numberOfFlashes = 7;
         rb = GetComponent<Rigidbody2D>();
         timer = regenInterval;
-        hpIncreaseAmount = (int)(maxHealth * 0.05f);
         
     }
     private void OnEnable()
@@ -57,7 +62,7 @@ public class HealthBar : MonoBehaviour
     {
         if (newLevel == checkLevel.currentLevel)
         {
-            maxHealth = (int)(100 * Mathf.Pow(1.2f, checkLevel.currentLevel - 1));
+            maxHealth = (int)(100 * Mathf.Pow(1.2f, checkLevel.currentLevel - 1) + bonus);
             currentHealth = maxHealth;
             UpdateHealth(0);
             PlayerPrefs.SetFloat("MaxHP", maxHealth);

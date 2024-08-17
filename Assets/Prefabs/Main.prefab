@@ -233,6 +233,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  isDead: 0
 --- !u!114 &3866077142762680627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +259,7 @@ MonoBehaviour:
   bulletPrefabB: {fileID: 2562588777975479993, guid: 684d2384be22a3d44acf557625adfecd, type: 3}
   firingPointB: {fileID: 8601671887616140032}
   reduceMP: 0
+  amountBonus: 0
 --- !u!114 &3456463551194114199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,12 +274,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
+  bonus: 0
   healthBarFill: {fileID: 0}
   healthText: {fileID: 0}
   fillSpeed: 0.5
   player: {fileID: 6065619404664459376}
-  damageInterval: 0.5
+  damageInterval: 1
   regenInterval: 5
+  hpIncreaseAmount: 0
+  count: 0
   checkLevel: {fileID: 7740520890292273495}
 --- !u!114 &7615022656178823981
 MonoBehaviour:
@@ -293,11 +298,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMP: 100
   currentMP: 100
+  bonus: 0
   mPFill: {fileID: 0}
   textMP: {fileID: 0}
   fillSpeed: 0.5
   player: {fileID: 3866077142762680627}
+  bullet: {fileID: 1189773153155443568, guid: 1cc4bb86e3f79494e9af71ce9d49ab46, type: 3}
+  bullet2: {fileID: 8392993549482410803, guid: 684d2384be22a3d44acf557625adfecd, type: 3}
   regenInterval: 5
+  mpIncreaseAmount: 0
+  count: 0
   checkLevel: {fileID: 7740520890292273495}
 --- !u!114 &7740520890292273495
 MonoBehaviour:
@@ -330,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textCoin: {fileID: 0}
-  questGiver: {fileID: 0}
+  currentCoins: 0
 --- !u!114 &-6317239452947751973
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject bulletPrefabB;
     [SerializeField] Transform firingPointB;
     public int reduceMP;
-
+    public int amountBonus;
     private MP mp;
 
     void Awake()
@@ -45,7 +45,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
                 nextAttackTime = Time.time + 0.5f;
-                reduceMP = 7;
+                reduceMP = 10;
                 isShooting = true;
             }
         }
@@ -78,7 +78,7 @@ public class PlayerAttack : MonoBehaviour
                     float randomSpeed = Random.Range(10f, 15f);
                     bulletScript.SetSpeed(randomSpeed);
                 }
-                reduceMP = 25;
+                reduceMP = 30;
                 nextAttackTime = Time.time + 0.5f;
                 isShooting = true;
             }

@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     [Range(1, 10)]
     [SerializeField] private float lifeTime;
 
-    [SerializeField] private int damage; // Sát thương của đạn
+    public int damage; // Sát thương của đạn
 
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;

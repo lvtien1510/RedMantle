@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI textCoin;
-    private int currentCoins;
+    public TextMeshProUGUI textCoin;
+    public int currentCoins;
     private int valuation = 1;
 
-    public QuestGiver questGiver;
+    //public QuestGiver questGiver;
 
     private void Start()
     {
@@ -29,17 +29,14 @@ public class CoinManager : MonoBehaviour
                 textCoin.text = currentCoins.ToString();
                 PlayerPrefs.SetInt("Coin", currentCoins);
                 // Gọi ItemCollected của QuestGiver với itemID của item
-                if (questGiver != null)
-                {
-                    questGiver.ItemCollected(item.itemID);
-                }
+                //if (questGiver != null)
+                //{
+                //    questGiver.ItemCollected(item.itemID);
+                //}
 
                 Destroy(collision.gameObject);
             }
-            else
-            {
-                Debug.LogWarning("Crystal component not found on item.");
-            }
+            
         }
     }
 }

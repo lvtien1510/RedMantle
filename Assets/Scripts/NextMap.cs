@@ -12,10 +12,12 @@ public class NextMap : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Next Map");
             GameManager.Instance.startPosition = startPosition;
             collision.gameObject.SetActive(false);
             StartCoroutine(LoadAfterDelay());
         }
+        
     }
 
     IEnumerator LoadAfterDelay()

@@ -4,7 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public class Quest
 {
-    // Existing fields
     public bool isActive;
     public string title;
     public List<string> descriptions = new List<string>();
@@ -12,8 +11,6 @@ public class Quest
     public QuestGoal goal;
     public int currentDescriptionIndex = 0;
     public int questID; // ID của quest
-
-    // Existing methods
 
     public void StartQuest()
     {
@@ -47,23 +44,17 @@ public class Quest
 
     public void SaveQuestData()
     {
-        PlayerPrefs.SetInt("CurrentQuestID", questID);
-        PlayerPrefs.SetString("IsActive", isActive.ToString());
-        PlayerPrefs.SetInt("CurrentDescriptionIndex", currentDescriptionIndex);
-        for (int i = 0; i < goal.currentAmounts.Count; i++)
-        {
-            PlayerPrefs.SetInt("Quest" + questID + "_CurrentAmount" + i, goal.currentAmounts[i]);
-        }
+        PlayerPrefs.SetInt("Quest" + questID + "_IsActive", isActive ? 1 : 0);
+        PlayerPrefs.SetInt("Quest" + questID + "_CurrentDescriptionIndex", currentDescriptionIndex);
+        goal.SaveProgress(questID);
         PlayerPrefs.Save(); // Lưu lại tất cả các thay đổi
     }
 
     public void LoadQuestData()
     {
-        currentDescriptionIndex = PlayerPrefs.GetInt("CurrentDescriptionIndex", 0);
-        isActive = bool.Parse(PlayerPrefs.GetString("IsActive", "true"));
-        for (int i = 0; i < goal.currentAmounts.Count; i++)
-        {
-            goal.currentAmounts[i] = PlayerPrefs.GetInt("Quest" + questID + "_CurrentAmount" + i, 0);
-        }
+        isActive = PlayerPrefs.GetInt("Quest" + questID + "_IsActive", 0) == 1;
+        currentDescriptionIndex = PlayerPrefs.GetInt("Quest" + questID + "_CurrentDescriptionIndex", 0);
+        goal.LoadProgress(questID);
     }
 }
+

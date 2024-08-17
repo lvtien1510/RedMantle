@@ -5,40 +5,26 @@ using UnityEngine;
 public class FlyEnemy : MonoBehaviour
 {
     [SerializeField] private float speed;
-    public bool chase = false;
-    [SerializeField] private Transform startingPoint;
-    [SerializeField] private GameObject player;
+    [SerializeField] private float lineOfSize;
+    [SerializeField] private Transform player;
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
     private void FixedUpdate()
     {
-        if (player == null)
+        float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
+        if (distanceFromPlayer < lineOfSize)
         {
-            return;
+            transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
         }
-        if (chase == true)
-            Chase();
-        else
-            ReturnStartPoint();
+
         Flip();
     }
-    private void Chase()
+    private void OnDrawGizmos()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        //if (Vector2.Distance(transform.position, player.transform.position) <= 0.5f)
-        //{
-        //    //Change speed, shoot, animation
-        //}
-        //else
-        //{
-        //    //reset variables
-        //}
-    }
-    private void ReturnStartPoint()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, startingPoint.position, speed * Time.deltaTime);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, lineOfSize);
     }
     private void Flip()
     {

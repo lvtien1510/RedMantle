@@ -2,7 +2,6 @@
 using UnityEngine;
 
 [System.Serializable]
-
 public enum GoalType
 {
     Kill,
@@ -11,13 +10,10 @@ public enum GoalType
 
 public class QuestGoal
 {
-    // Existing fields
     public GoalType goalType;
     public List<int> requiredAmounts = new List<int>();
     public List<int> currentAmounts = new List<int>();
     public List<int> targetIds;
-
-    // Existing methods
 
     public int CurrentRequiredAmount(int currentDescriptionIndex)
     {
@@ -26,26 +22,26 @@ public class QuestGoal
 
     public bool IsReached(int currentDescriptionIndex)
     {
-        return (currentAmounts[currentDescriptionIndex] >= requiredAmounts[currentDescriptionIndex]);
+        return currentAmounts[currentDescriptionIndex] >= requiredAmounts[currentDescriptionIndex];
     }
 
-    public void EnemyKilled(int enemyID)
+    public void EnemyKilled(int enemyID, int questID)
     {
         int index = targetIds.IndexOf(enemyID);
         if (index >= 0 && goalType == GoalType.Kill)
         {
             currentAmounts[index]++;
-            SaveProgress(); // Lưu dữ liệu tiến trình nhiệm vụ sau khi tiêu diệt kẻ thù
+            SaveProgress(questID); // Truyền questID vào đây
         }
     }
 
-    public void ItemCollected(int itemID)
+    public void ItemCollected(int itemID, int questID)
     {
         int index = targetIds.IndexOf(itemID);
         if (index >= 0 && goalType == GoalType.Gathering)
         {
             currentAmounts[index]++;
-            SaveProgress(); // Lưu dữ liệu tiến trình nhiệm vụ sau khi thu thập vật phẩm
+            SaveProgress(questID); // Truyền questID vào đây
         }
     }
 
@@ -57,20 +53,20 @@ public class QuestGoal
         }
     }
 
-    public void SaveProgress()
+    public void SaveProgress(int questID)
     {
         for (int i = 0; i < currentAmounts.Count; i++)
         {
-            PlayerPrefs.SetInt("QuestGoal_CurrentAmount" + i, currentAmounts[i]);
+            PlayerPrefs.SetInt("Quest" + questID + "_Goal_CurrentAmount" + i, currentAmounts[i]);
         }
         PlayerPrefs.Save(); // Lưu lại tất cả các thay đổi
     }
 
-    public void LoadProgress()
+    public void LoadProgress(int questID)
     {
         for (int i = 0; i < currentAmounts.Count; i++)
         {
-            currentAmounts[i] = PlayerPrefs.GetInt("QuestGoal_CurrentAmount" + i, 0);
+            currentAmounts[i] = PlayerPrefs.GetInt("Quest" + questID + "_Goal_CurrentAmount" + i, 0);
         }
     }
 }

@@ -8,7 +8,7 @@ public class Bullet2 : MonoBehaviour
     [SerializeField] private float speed;
     [Range(1, 10)]
     [SerializeField] private float lifeTime;
-    [SerializeField] private int damage; // Sát thương của đạn
+    public int damage; // Sát thương của đạn
     private float throwAngle = 45f; // Góc ném
 
     private Rigidbody2D rb;
