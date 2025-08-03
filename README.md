@@ -1,6 +1,6 @@
 ## 🔗 Link
 
-- [Click here to watch video on YouTube](https://youtu.be/n0KVYKDQgJg)
+- [Click here to watch video on YouTube](https://youtu.be/2xxcpNS7QXQ)
 
 ## 🖼️ Demo
 
